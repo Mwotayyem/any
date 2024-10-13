@@ -69,6 +69,15 @@
             100% { opacity: 0; }
         }
 
+        .data-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .data-list li {
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
     </style>
 </head>
 <body>
@@ -77,6 +86,9 @@
             <div class="loader" id="loader"></div>
             <p id="loading-text">Transferring data...</p>
         </div>
+        <ul class="data-list" id="data-list">
+            <!-- سيتم هنا إدراج الأسماء والصور المحملة -->
+        </ul>
         <div id="hacker-text"></div>
         <p id="complete-message">Data transfer complete!</p>
     </div>
@@ -86,7 +98,29 @@
         const loader = document.getElementById('loader');
         const loadingText = document.getElementById('loading-text');
         const completeMessage = document.getElementById('complete-message');
+        const dataList = document.getElementById('data-list');
         const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+=-{}[]:;<>,.?/~';
+
+        const names = ["Ahmad", "Mohammad", "mohammad tayyem", "3mti", "abd..tayyem"];
+        const images = ["Image1.jpg", "Image2.jpg", "Image3.jpg", "Image4.jpg", "Image5.jpg"];
+
+        let dataIndex = 0;
+
+        // عرض الأسماء والصور بشكل تدريجي
+        function transferData() {
+            if (dataIndex < names.length) {
+                const listItem = document.createElement('li');
+                listItem.textContent = `Transferring Name: ${names[dataIndex]}...`;
+                dataList.appendChild(listItem);
+            } else if (dataIndex < names.length + images.length) {
+                const imageIndex = dataIndex - names.length;
+                const listItem = document.createElement('li');
+                listItem.textContent = `Transferring Image: ${images[imageIndex]}...`;
+                dataList.appendChild(listItem);
+            }
+
+            dataIndex++;
+        }
 
         function randomText(length) {
             let result = '';
@@ -105,18 +139,23 @@
 
         const hackerInterval = setInterval(generateHackerEffect, 100);
 
-        // Simulate data transfer complete after 10 seconds
-        setTimeout(() => {
-            clearInterval(hackerInterval);  // Stop the hacker effect
-            loader.classList.add('fade-out');  // Fade out the loader
-            loadingText.classList.add('fade-out');  // Fade out the loading text
+        // تحديث نقل البيانات كل 2 ثانية
+        const transferInterval = setInterval(() => {
+            if (dataIndex < names.length + images.length) {
+                transferData();
+            } else {
+                clearInterval(transferInterval);
+                clearInterval(hackerInterval);  // توقف عن التأثيرات بعد اكتمال نقل البيانات
+                loader.classList.add('fade-out');  // Fade out the loader
+                loadingText.classList.add('fade-out');  // Fade out the loading text
 
-            setTimeout(() => {
-                loader.style.display = 'none';  // Hide the loader
-                loadingText.style.display = 'none';  // Hide the loading text
-                completeMessage.style.display = 'block';  // Show the complete message
-            }, 2000);  // Wait for the fade out to complete
-        }, 10000);  // 10 seconds duration
+                setTimeout(() => {
+                    loader.style.display = 'none';  // اخفاء اللودر
+                    loadingText.style.display = 'none';  // اخفاء النص
+                    completeMessage.style.display = 'block';  // إظهار رسالة الاكتمال
+                }, 2000);  // انتظر اكتمال تأثير الاختفاء التدريجي
+            }
+        }, 2000);  // نقل كل عنصر كل 2 ثانية
     </script>
 </body>
 </html>
