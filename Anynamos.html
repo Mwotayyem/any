@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hacking Simulation</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #0f0;
+            font-family: 'Courier New', Courier, monospace;
+            text-align: center;
+            padding: 50px;
+        }
+        .loading {
+            width: 100%;
+            background: #444;
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        .loading-bar {
+            width: 0;
+            height: 30px;
+            background: #0f0;
+            transition: width 5s;
+        }
+        #message {
+            display: none;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Hacking Simulation</h1>
+<p>جاري تصدير البيانات...</p>
+
+<div class="loading">
+    <div class="loading-bar" id="loadingBar"></div>
+</div>
+
+<p id="message">تم تصدير البيانات بنجاح إلى <a href="https://anynmos.com">AnyNmos</a>!</p>
+
+<script>
+    // Function to simulate loading
+    function simulateLoading() {
+        const loadingBar = document.getElementById('loadingBar');
+        loadingBar.style.width = '100%';
+
+        setTimeout(() => {
+            document.getElementById('message').style.display = 'block';
+        }, 5000); // عرض الرسالة بعد 5 ثواني
+    }
+
+    // Start loading simulation
+    simulateLoading();
+</script>
+
+</body>
+</html>
